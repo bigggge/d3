@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../d3/d3.min.js"></script>
+</head>
+<style>
+    .MyRect {
+        fill: steelblue;
+    }
+
+    .MyText {
+        fill: white;
+        text-anchor: middle;
+    }
+</style>
+<body>
+<script>
+    var width = 400;
+    var height = 400;
+
+    var svg = d3.select('body')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+
+    var padding = {left: 30, right: 30, top: 20, bottom: 20}
+
+    var dataset = [10, 20, 30, 40, 33, 24, 12, 5];
+
+    var xScale = d3.scaleBand()//创建序数段比例尺
+        .domain(d3.range(dataset.length))//设置输入的定义域
+        .rangeRound([0, width - padding.left - padding.right])//设置输出的值域并取整
+
+    var yScale = d3.scaleLinear()//创建定量线性比例尺
+        .domain([0, d3.max(dataset)])//设置输入的定义域
+        .range([height - padding.top - padding.bottom, 0])//设置输出的值域
+
+    var xAxis = d3.axisBottom(xScale)
+    var yAxis = d3.axisLeft(yScale)
+
+    var rectPadding = 4
+
+    svg.selectAll('.MyRect')
+        .data(dataset)
+        .enter()
+        .append('rect')
+        .attr('class', 'MyRect')
+        .attr('transform', "translate(" + padding.left + "," + padding.top + ")")
+        .attr('x', function (d, i) {
+            return xScale(i) + rectPadding / 2
+        })
+        .attr('y', function (d) {
+            return yScale(d)
+        })
+        .attr('width', xScale.bandwidth() - rectPadding)
+        .attr('height', function (d) {
+            return height - padding.top - padding.bottom - yScale(d)
+        })
+
+    svg.selectAll('.MyText')
+        .data(dataset)
+        .enter()
+        .append('text')
+        .attr('class', 'MyText')
+        .attr("transform", "translate(" + padding.left + "," + padding.top + ")")
+        .attr('x', function (d, i) {
+            return xScale(i) + rectPadding / 2
+        })
+        .attr('y', function (d) {
+            return yScale(d)
+        })
+        .attr('dx', function () {
+            return (xScale.bandwidth() - rectPadding) / 2
+        })
+        .attr('dy', function (d) {
+            return 20
+        })
+        .text(function (d) {
+            return d
+        })
+
+    svg.append('g')
+        .attr('class', 'axis')
+        .attr("transform", "translate(" + padding.left + "," + (height - padding.bottom) + ")")
+        .call(xAxis)
+
+    svg.append('g')
+        .attr('class', 'axis')
+        .attr("transform", "translate(" + padding.left + "," + padding.top + ")")
+        .call(yAxis);
+</script>
+
+</body>
+</html>

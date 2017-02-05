@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选择、插入、删除元素</title>
+    <script src="../d3/d3.min.js"></script>
+</head>
+<body>
+<p>Apple</p>
+<p id="myid">Pear</p>
+<p>Banana</p>
+<script>
+    var body = d3.select('body')
+
+    body.append('p')
+        .text('append')
+
+    body.insert("p", "#myid")
+        .text("insert");
+
+    body.select('#myid').remove();
+
+</script>
+</body>
+</html>
