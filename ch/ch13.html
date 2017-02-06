@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>饼状图</title>
+    <script src="../d3/d3.min.js"></script>
+</head>
+<body>
+<script>
+    var width = 400
+    var height = 400
+    var dataset = [30, 10, 43, 55, 13]
+
+    var svg = d3.select('body')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+
+    var pie = d3.pie()//创建一个饼生成器
+    var piedata = pie(dataset)//计算给定数据集的角度值
+
+    var outerRadius = 150
+    var innerRadius = 0
+
+    var arc = d3.arc()//创建一个新的弧生成器
+        .innerRadius(innerRadius)//设置内径
+        .outerRadius(outerRadius)//设置外径
+
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    var arcs = svg.selectAll('g')
+        .data(piedata)
+        .enter()
+        .append('g')
+        .attr("transform", "translate(" + (width / 2) + "," + (width / 2) + ")")
+
+    arcs.append('path')
+        .attr('fill', function (d, i) {
+            return color(i)
+        })
+        .attr('d', function (d) {
+            return arc(d)
+        })
+
+    arcs.append('text')
+        .attr("transform", function (d) {
+            return "translate(" + arc.centroid(d) + ")";
+        })
+        .attr('text-anchor', 'middle')
+        .text(function (d) {
+            return d.data
+        })
+
+
+</script>
+
+</body>
+</html>
