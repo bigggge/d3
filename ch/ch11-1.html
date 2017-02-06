@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交互式操作</title>
+    <script src="../d3/d3.min.js"></script>
+</head>
+<body>
+<script>
+    var width = 400;
+    var height = 400;
+
+    var svg = d3.select('body')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+
+    var circle = svg.append('circle')
+        .attr('cx', 50)
+        .attr('cy', 50)
+        .attr('r', 50)
+        .style('fill', 'green')
+
+    circle.on('click', function () {
+        alert('clicked')
+    })
+</script>
+</body>
+</html>

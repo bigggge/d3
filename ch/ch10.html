@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>理解 Update、Enter、Exit</title>
+    <script src="../d3/d3.min.js"></script>
+</head>
+<body>
+<div id="one">
+    <p></p>
+    <p></p>
+    <p></p>
+</div>
+<h5>----------</h5>
+<div id="two">
+    <h3></h3>
+    <h3></h3>
+    <h3></h3>
+</div>
+
+
+<script>
+    // update 部分的处理办法一般是：更新属性值
+    // enter 部分的处理办法一般是：添加元素后，赋予属性值
+    // exit 部分的处理办法一般是：删除元素（remove）
+
+    var dataset = [3, 6, 9, 12, 15]
+    var p = d3.select('#one').selectAll('p')
+    var update = p.data(dataset)
+    var enter = update.enter()
+    update.text(function (d) {
+        return 'update' + d
+    })
+    enter.append('p')
+        .text(function (d) {
+            return 'enter' + d
+        })
+
+    var dataset2 = ['A']
+    var h = d3.select('#two').selectAll('h3')
+    var update2 = h.data(dataset2)
+    var exit = update2.exit()
+    update2.text(function (d) {
+        return 'update2' + d
+    })
+
+    exit.text(function (d) {
+        return 'exit'
+    })
+
+    //    exit.remove()
+
+
+</script>
+
+</body>
+</html>
