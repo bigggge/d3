@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绘制图形</title>
+</head>
+<body>
+
+<canvas id="canvas" width="1000" height="1000"></canvas>
+
+<!--不同于SVG，HTML中的元素canvas只支持一种原生的图形绘制：矩形-->
+<script>
+    var canvas = document.getElementById('canvas')
+    if (canvas.getContext) {
+        var ctx = canvas.getContext('2d')
+
+        // 绘制一个填充的矩形
+        ctx.fillRect(25, 25, 100, 100)
+        // 清除指定矩形区域，让清除部分完全透明
+        ctx.clearRect(45, 45, 60, 60)
+        // 绘制一个矩形的边框
+        ctx.strokeRect(50, 50, 50, 50)
+
+        // 绘制一个三角形
+        ctx.beginPath()
+        ctx.moveTo(200, 50)
+        ctx.lineTo(300, 50)
+        ctx.lineTo(300, 100)
+        ctx.fill()//通过填充路径的内容区域生成实心的图形
+
+        ctx.beginPath()
+        ctx.moveTo(320, 50)
+        ctx.lineTo(380, 50)
+        ctx.lineTo(380, 100)
+        ctx.closePath()
+        ctx.stroke()//通过线条来绘制图形轮廓
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (var i = 0; i < 4; i++) {
+            for (var j = 0; j < 3; j++) {
+                ctx.beginPath();
+                var x = 25 + j * 50;               // x 坐标值
+                var y = 25 + i * 50;               // y 坐标值
+                var radius = 20;                    // 圆弧半径
+                var startAngle = 0;                     // 开始点
+                var endAngle = Math.PI + (Math.PI * j) / 2; // 结束点
+                var anticlockwise = i % 2 != 0; // 顺时针或逆时针
+
+                ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+
+                if (i > 1) {
+                    ctx.fill();
+                } else {
+                    ctx.stroke();
+                }
+            }
+        }
+
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // 贝赛尔曲线
+        ctx.beginPath();
+        ctx.moveTo(50, 50);
+        // quadraticCurveTo(cp1x, cp1y, x, y)
+        // 绘制贝塞尔曲线，cp1x,cp1y为控制点，x,y为结束点。
+        ctx.quadraticCurveTo(100, 50, 100, 100);
+        ctx.stroke();
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    }
+</script>
+</body>
+</html>
