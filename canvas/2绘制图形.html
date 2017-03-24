@@ -14,61 +14,83 @@
     if (canvas.getContext) {
         var ctx = canvas.getContext('2d')
 
-        // 绘制一个填充的矩形
-        ctx.fillRect(25, 25, 100, 100)
-        // 清除指定矩形区域，让清除部分完全透明
-        ctx.clearRect(45, 45, 60, 60)
-        // 绘制一个矩形的边框
-        ctx.strokeRect(50, 50, 50, 50)
+//        rect()
+        function rect() {
+            // 绘制一个填充的矩形
+            ctx.fillRect(25, 25, 100, 100)
+            // 清除指定矩形区域，让清除部分完全透明
+            // void ctx.clearRect(x, y, width, height);
+            ctx.clearRect(45, 45, 60, 60)
+            // 绘制一个矩形的边框
+            // void ctx.strokeRect(x, y, width, height);
+            ctx.strokeRect(50, 50, 50, 50)
+        }
 
-        // 绘制一个三角形
-        ctx.beginPath()
-        ctx.moveTo(200, 50)
-        ctx.lineTo(300, 50)
-        ctx.lineTo(300, 100)
-        ctx.fill()//通过填充路径的内容区域生成实心的图形
+//        triangle()
+        function triangle() {
+            // 绘制一个三角形
+            // 起始一条路径，或重置当前路径
+            ctx.beginPath()
+            // 将笔触移动到指定的坐标x以及y上
+            ctx.moveTo(200, 50)
+            // 绘制一条从当前位置到指定x以及y位置的直线
+            ctx.lineTo(300, 50)
+            ctx.lineTo(300, 100)
+            //通过填充路径的内容区域生成实心的图形
+            ctx.fill()
 
-        ctx.beginPath()
-        ctx.moveTo(320, 50)
-        ctx.lineTo(380, 50)
-        ctx.lineTo(380, 100)
-        ctx.closePath()
-        ctx.stroke()//通过线条来绘制图形轮廓
+            ctx.beginPath()
+            ctx.moveTo(320, 50)
+            ctx.lineTo(380, 50)
+            ctx.lineTo(380, 100)
+            // 当你调用fill()函数时，所有没有闭合的形状都会自动闭合，
+            // 所以你不需要调用closePath()函数。
+            // 但是调用stroke()时不会自动闭合
+            ctx.closePath()
+            //通过线条来绘制图形轮廓
+            ctx.stroke()
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
 
-        for (var i = 0; i < 4; i++) {
-            for (var j = 0; j < 3; j++) {
-                ctx.beginPath();
-                var x = 25 + j * 50;               // x 坐标值
-                var y = 25 + i * 50;               // y 坐标值
-                var radius = 20;                    // 圆弧半径
-                var startAngle = 0;                     // 开始点
-                var endAngle = Math.PI + (Math.PI * j) / 2; // 结束点
-                var anticlockwise = i % 2 != 0; // 顺时针或逆时针
+//        arc()
+//        ctx.beginPath()
+//        ctx.arc(100, 100, 100, 0, Math.PI / 2 * 3, true)
+//        ctx.stroke()
+        function arc() {
+            for (var i = 0; i < 4; i++) {
+                for (var j = 0; j < 3; j++) {
+                    ctx.beginPath();
+                    var x = 25 + j * 50;               // x 坐标值
+                    var y = 25 + i * 50;               // y 坐标值
+                    var radius = 20;                    // 圆弧半径
+                    var startAngle = 0;                     // 开始点
+                    var endAngle = Math.PI + (Math.PI * j) / 2; // 结束点
+                    var anticlockwise = i % 2 != 0; // 顺时针或逆时针
+                    // 圆心x坐标，圆心y坐标，圆弧半径，圆弧起始点，圆弧终点，true为逆时针
+                    ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
 
-                ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise);
-
-                if (i > 1) {
-                    ctx.fill();
-                } else {
-                    ctx.stroke();
+                    if (i > 1) {
+                        ctx.fill();
+                    } else {
+                        ctx.stroke();
+                    }
                 }
             }
         }
 
+        bezier()
+        function bezier() {
+            // 贝赛尔曲线
+            ctx.beginPath();
+            ctx.moveTo(50, 50);
+            // quadraticCurveTo(cp1x, cp1y, x, y)
+            // 绘制贝塞尔曲线，cp1x,cp1y为控制点，x,y为结束点。
+            ctx.quadraticCurveTo(100, 50, 100, 100);
+            ctx.stroke();
+        }
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // 贝赛尔曲线
-        ctx.beginPath();
-        ctx.moveTo(50, 50);
-        // quadraticCurveTo(cp1x, cp1y, x, y)
-        // 绘制贝塞尔曲线，cp1x,cp1y为控制点，x,y为结束点。
-        ctx.quadraticCurveTo(100, 50, 100, 100);
-        ctx.stroke();
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+//        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     }
 </script>

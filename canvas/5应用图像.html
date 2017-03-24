@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>应用图像</title>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+<script>
+    var ctx = document.getElementById('canvas').getContext('2d')
+    var img = new Image()
+    img.onload = function () {
+        ctx.drawImage(img, 0, 0)
+        ctx.strokeStyle = 'white'
+        ctx.beginPath()
+        ctx.moveTo(30, 96);
+        ctx.lineTo(70, 66);
+        ctx.lineTo(103, 76);
+        ctx.lineTo(170, 15);
+        ctx.stroke();
+    }
+
+    img.src = 'data:image/gif;base64,R0lGODlhCwALAIAAAAAA3pn/ZiH5BAEAAAEALAAAAAALAAsAAAIUhA+hkcuO4lmNVindo7qyrIXiGBYAOw==';
+</script>
+</body>
+</html>

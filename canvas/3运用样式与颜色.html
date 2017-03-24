@@ -51,7 +51,6 @@
         ctx1.fill();
     }
 
-
     // 线型 Line styles
     var ctx2 = document.getElementById('canvas2').getContext('2d')
     var lineCap = ['butt', 'round', 'square'];
@@ -63,6 +62,16 @@
         ctx2.lineTo(5 + i * 18, 150);
         ctx2.stroke();
     }
+
+
+    ctx2.shadowOffsetX = 2;
+    ctx2.shadowOffsetY = 2;
+    ctx2.shadowBlur = 2;
+    ctx2.shadowColor = "rgba(0, 0, 0, 0.5)";
+
+    ctx2.font = "20px Times New Roman";
+    ctx2.fillStyle = "Black";
+    ctx2.fillText("Sample String", 300, 30);
 
 </script>
 </body>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基本的动画</title>
+</head>
+<body>
+
+<canvas id="canvas" width="1000px" height="1000px"></canvas>
+
+<script>
+    var sun = new Image()
+    var moon = new Image()
+    var earth = new Image()
+
+    function init() {
+        sun.src = 'https://mdn.mozillademos.org/files/1456/Canvas_sun.png';
+        moon.src = 'https://mdn.mozillademos.org/files/1443/Canvas_moon.png';
+        earth.src = 'https://mdn.mozillademos.org/files/1429/Canvas_earth.png';
+        window.requestAnimationFrame(draw)
+    }
+
+    function draw() {
+        var sunX = 300, sunY = 300, orbitRadius = 150, earthRadius = 12
+
+
+        var ctx = document.getElementById('canvas').getContext('2d')
+        ctx.globalCompositeOperation = 'destination-over'
+        ctx.clearRect(0, 0, 500, 500)
+        ctx.fillStyle = 'rgba(0,0,0,0.4)';
+        ctx.strokeStyle = 'rgba(0,153,255,0.4)';
+
+        ctx.save()
+        // translate to center
+        ctx.translate(sunX, sunY)
+
+        // Earth
+        var time = new Date()
+        var secondsPerCircleEarth = 3.65;
+        // time.getSeconds() + time.getMilliseconds() / 1000
+        // 精确到毫秒的当前秒数 如 1.000s 转了一圈,0.500 转了半圈
+        ctx.rotate(((2 * Math.PI) / secondsPerCircleEarth)
+            * (time.getSeconds() + time.getMilliseconds() / 1000))
+        // 旋转后将地球移动到轨道上
+        ctx.translate(orbitRadius, 0);
+        // 绘制地球和月球的太阳照射阴影
+        ctx.fillRect(0, -earthRadius, 50, earthRadius * 2);
+        ctx.drawImage(earth, -earthRadius, -earthRadius);
+
+        // Moon
+        ctx.save()
+        var secondsPerCircleMoon = 1;
+        ctx.rotate(((2 * Math.PI) / secondsPerCircleMoon)
+            * (time.getSeconds() + time.getMilliseconds() / 1000))
+        ctx.translate(0, 28.5)
+        ctx.drawImage(moon, -3.5, -3.5)
+        ctx.restore()
+
+        ctx.restore()
+
+        ctx.beginPath()
+        ctx.arc(sunX, sunY, orbitRadius, 0, Math.PI * 2, false)
+        ctx.stroke()
+        ctx.drawImage(sun, 0, 0, sunX * 2, sunY * 2)
+        window.requestAnimationFrame(draw)
+    }
+    init()
+</script>
+
+
+</body>
+</html>

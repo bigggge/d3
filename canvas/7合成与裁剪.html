@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>合成与裁剪</title>
+</head>
+<body>
+
+<canvas id="canvas" width="1000px" height="1000px"></canvas>
+
+
+<script>
+
+    //    var ctx = document.getElementById('canvas').getContext('2d')
+    //    ctx.translate(100, 100)
+    //
+    //    drawStar(ctx, 100)
+
+    draw()
+
+    function draw() {
+        var ctx = document.getElementById('canvas').getContext('2d')
+        ctx.fillRect(0, 0, 1000, 600)
+
+        ctx.beginPath()
+        ctx.arc(500, 300, 300, 0, Math.PI * 2, true)
+        ctx.clip()
+
+        var lingrad = ctx.createLinearGradient(0, 0, 0, 100)
+        lingrad.addColorStop(0, '#405600')
+        lingrad.addColorStop(1, '#8386ff')
+
+        ctx.fillStyle = lingrad
+        ctx.fillRect(0, 0, 1000, 600)
+
+        for (var j = 1; j < 100; j++) {
+            ctx.save()
+            ctx.fillStyle = '#fff'
+            ctx.translate(Math.floor(Math.random() * 1000), Math.floor(Math.random() * 500))
+            drawStar(ctx, Math.floor(Math.random() * 8))
+            ctx.restore()
+        }
+    }
+
+
+    function drawStar(ctx, r) {
+//        ctx.save()
+        ctx.beginPath()
+        ctx.moveTo(r, 0)
+        for (var i = 0; i < 9; i++) {
+            ctx.rotate(Math.PI / 5)
+            if (i % 2 === 0) {
+                ctx.lineTo((r / 0.525731) * 0.200811, 0)
+            } else {
+                ctx.lineTo(r, 0)
+            }
+        }
+        ctx.closePath()
+        ctx.fill()
+        console.log('.')
+//        ctx.restore()
+    }
+
+</script>
+</body>
+</html>

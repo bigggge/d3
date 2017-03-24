@@ -6,18 +6,33 @@
 </head>
 <body>
 
-<canvas id="canvas" width="150" height="150"></canvas>
+<canvas id="canvas" width="1500" height="1500"></canvas>
 
 <script>
-        var canvas = document.getElementById('canvas')
-        if (canvas.getContext) {
-            var ctx = canvas.getContext('2d')
+// <canvas> 是 HTML5 新增的元素，
+// 可使用JavaScript脚本来绘制图形。
+// 例如：画图，合成照片，创建动画甚至实时视频处理与渲染。
+    var canvas = document.getElementById('canvas')
+    if (canvas.getContext) {
+        var ctx = canvas.getContext('2d')
 
-            ctx.fillStyle = 'rgb(200,0,0)'
-            ctx.fillRect(10, 10, 55, 50)
-            ctx.fillStyle = 'rgba(0,0,200,0.5)'
-            ctx.fillRect(30, 30, 55, 50)
-        }
+        // 设置或返回用于填充绘画的颜色、渐变或模式
+        ctx.fillStyle = 'red'
+        // 填充矩形
+        // void ctx.fillRect(x, y, width, height);
+        ctx.fillRect(10, 10, 55, 50)
+        ctx.fillStyle = 'rgba(0,0,200,0.5)'
+        ctx.fillRect(30, 30, 55, 50)
+
+        // 创建一个沿参数坐标指定的直线的渐变
+        // CanvasGradient ctx.createLinearGradient(x0, y0, x1, y1);
+        var gradient = ctx.createLinearGradient(100, 100, 250, 250)
+        // void gradient.addColorStop(offset, color);
+        gradient.addColorStop(0, 'red')
+        gradient.addColorStop(1, 'green')
+        ctx.fillStyle = gradient
+        ctx.fillRect(100, 100, 150, 150)
+    }
 </script>
 </body>
 </html>

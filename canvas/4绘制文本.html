@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绘制文本</title>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<script>
+
+    var ctx = document.getElementById('canvas').getContext('2d')
+    ctx.font = '18px serif'
+    ctx.fillText('Hello World!', 10, 50)
+    ctx.strokeText('Hello World!', 150, 50)
+
+</script>
+
+
+</body>
+</html>
